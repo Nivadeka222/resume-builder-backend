@@ -16,8 +16,23 @@ def generate_resume_pdf(data: dict, output_path: str = "resume_output.pdf"):
         bottomMargin=0.5 * inch
     )
 
-    name_style = ParagraphStyle("Name", fontSize=20, fontName="Helvetica-Bold", alignment=TA_CENTER, spaceAfter=4)
-    contact_style = ParagraphStyle("Contact", fontSize=9, fontName="Helvetica", alignment=TA_CENTER, spaceAfter=2)
+    name_style = ParagraphStyle(
+    "Name", 
+    fontSize=20, 
+    fontName="Helvetica-Bold", 
+    alignment=TA_CENTER, 
+    spaceAfter=4,
+    leading=24
+    )
+
+    contact_style = ParagraphStyle(
+    "Contact", 
+    fontSize=9, 
+    fontName="Helvetica", 
+    alignment=TA_CENTER, 
+    spaceAfter=2,
+    leading=14
+    )
     section_style = ParagraphStyle("Section", fontSize=11, fontName="Helvetica-Bold", spaceBefore=8, spaceAfter=2)
     institution_style = ParagraphStyle("Institution", fontSize=10, fontName="Helvetica-Bold", spaceAfter=1)
     degree_style = ParagraphStyle("Degree", fontSize=9, fontName="Helvetica-Oblique", spaceAfter=4)
