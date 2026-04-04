@@ -58,51 +58,57 @@ def create_tasks(template_analyzer, writer, reviewer, pdf_builder, user_info, te
     )
 
     pdf_task = Task(
-        description="""
-        Convert the final resume into a JSON object for PDF generation.
-        Return ONLY valid JSON, no extra text, no markdown, no backticks.
+    description="""
+    Convert the final resume into a JSON object for PDF generation.
+    
+    STRICT RULES:
+    - Return ONLY the raw JSON object
+    - No markdown, no backticks, no ```json, no extra text
+    - No trailing commas anywhere
+    - All keys and values must use double quotes
+    - No single quotes anywhere
+    - No comments inside JSON
 
-        Use this exact JSON structure:
-        {
-            "name": "Full Name",
-            "phone": "+91 XXXXXXXXXX",
-            "email": "email@example.com",
-            "linkedin": "LinkedIn Name",
-            "github": "github.com/handle",
-            "education": [
-                {
-                    "institution": "University Name",
-                    "location": "City, Country",
-                    "degree": "Degree Name; CGPA: X.XX",
-                    "dates": "Month Year – Month Year"
-                }
-            ],
-            "experience": [
-                {
-                    "company": "Company Name",
-                    "location": "Onsite/Remote",
-                    "role": "Role Title",
-                    "dates": "Month Year – Month Year",
-                    "bullets": ["Point 1", "Point 2"]
-                }
-            ],
-            "projects": [
-                {
-                    "name": "Project Name",
-                    "tech": "Tech Stack",
-                    "dates": "Month Year – Present",
-                    "bullets": ["Point 1", "Point 2"]
-                }
-            ],
-            "skills": {
-                "Category Name": "skill1, skill2, skill3"
-            },
-            "certifications": ["Cert 1", "Cert 2"]
-        }
-        """,
-        agent=pdf_builder,
-        expected_output="Valid JSON object only, no extra text",
-        context=[review_task]
-    )
-
+    Use this exact structure:
+    {
+        "name": "Full Name",
+        "phone": "+91 XXXXXXXXXX",
+        "email": "email@example.com",
+        "linkedin": "LinkedIn Name",
+        "github": "github.com/handle",
+        "education": [
+            {
+                "institution": "University Name",
+                "location": "City, Country",
+                "degree": "Degree Name",
+                "dates": "Month Year - Month Year"
+            }
+        ],
+        "experience": [
+            {
+                "company": "Company Name",
+                "location": "Onsite",
+                "role": "Role Title",
+                "dates": "Month Year - Month Year",
+                "bullets": ["Point 1", "Point 2"]
+            }
+        ],
+        "projects": [
+            {
+                "name": "Project Name",
+                "tech": "Tech Stack",
+                "dates": "Month Year - Present",
+                "bullets": ["Point 1", "Point 2"]
+            }
+        ],
+        "skills": {
+            "Category": "skill1, skill2"
+        },
+        "certifications": ["Cert 1", "Cert 2"]
+    }
+    """,
+    agent=pdf_builder,
+    expected_output="Valid raw JSON only, no markdown, no backticks, no extra text",
+    context=[review_task]
+)
     return [analyze_task, write_task, review_task, pdf_task]
