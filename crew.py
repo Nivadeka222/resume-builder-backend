@@ -10,7 +10,7 @@ def build_resume(user_info, template_text):
         agents=[template_analyzer, writer, reviewer, pdf_builder],
         tasks=tasks,
         process=Process.sequential,
-        verbose=True
+        verbose=False
     )
 
     result = crew.kickoff()
